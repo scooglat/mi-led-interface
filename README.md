@@ -65,8 +65,8 @@ client.show_image(pixel_grid)
 ```
 
 ```py
-from mi_led_interface.client import PanelClient
-from mi_led_interface.pixels import PixelGrid, Pixel
+from mili.client import PanelClient
+from mili.pixels import PixelGrid, Pixel
 from asyncio import run
 
 # ...or go a little deeper, and represent individual bits and bytes!
