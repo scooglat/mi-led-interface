@@ -7,7 +7,7 @@ Whew, what a mouthful, huh? MILI for short, provides automatic, high-level inter
 
 I went to Walmart one day, and picked up [this LED panel](https://www.walmart.com/ip/Merkury-innovations-Matrix-LED-Pixel-Display-Color-Changing-LED-Display/5150283693). Naturally, it had an app, and every API developer's worst nightmare is other people's apps to control their technology. So, I started looking into alternatives.
 
-I had come across this [reverse-engineering](github.com/offe/mi-led-display?tab=readme-ov-file) of the model, specifically how it interfaces over BLE. Out of curiosity, I decided to start tinkering with it too.
+I had come across this [reverse-engineering](https://www.github.com/offe/mi-led-display?tab=readme-ov-file) of the model, specifically how it interfaces over BLE. Out of curiosity, I decided to start tinkering with it too.
 
 While the reverse-engineering was perfect, and the protocol worked as expected, what *didn't* work as expected was trying to interface it like a library... because it wasn't a library. It's a toolkit. So, I decided to use the effort that was already there, and develop a library that plays nicer with developers who want to get things done their way, with their product.
 
