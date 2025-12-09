@@ -15,13 +15,25 @@ Because of the nature of libraries, I felt it was best to provide an open-source
 
 ## Download
 
-You can install it from PyPi, once I have it listed, or you can download the source code and build it with Poetry.
+You can install it from PyPi, using pip:
+
+`pip install mi-led-interface`
+
+...or download it, and built it yourself.
+
+```
+git clone https://github.com/the-sluggiest-cat/mi-led-interface.git
+cd mi-led-interface
+python3 -m venv venv
+python3 -m pip install bleak
+python3 -m pip install pil
+```
 
 ## Examples:
 
 ```py
-from mi_led_interface.client import PanelClient
-from mi_led_interface.pixels import PixelGrid
+from mili.client import PanelClient
+from mili.pixels import PixelGrid
 
 # Until the script is stopped, if you have a model of the Matrix LED display close by,
 # it will display a 16x16 rendition of "silly_picture.png" in the directory with the running script.
@@ -31,8 +43,8 @@ client.show_image(pixel_grid)
 ```
 
 ```py
-from mi_led_interface.client import PanelClient
-from mi_led_interface.pixels import PixelGrid
+from mili.client import PanelClient
+from mili.pixels import PixelGrid
 
 # This works with animated images, too!
 client = PanelClient()
@@ -41,8 +53,8 @@ client.show_image(pixel_grid)
 ```
 
 ```py
-from mi_led_interface.client import PanelClient
-from mi_led_interface.pixels import PixelGrid
+from mili.client import PanelClient
+from mili.pixels import PixelGrid
 from PIL import Image
 
 # You can also use PILlow's images...
