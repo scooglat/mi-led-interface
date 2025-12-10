@@ -70,6 +70,8 @@ class PanelClient(BleakClient):
             data = 0
 
     def show_image(self, pixel_grid: PixelGrid | list[PixelGrid]):
+        if not self.device:
+            run(self.__connect_for_them())
         if isinstance(pixel_grid, PixelGrid):
             while True:
                 run(self.draw_to_panel(pixel_grid))
