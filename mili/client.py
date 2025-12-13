@@ -58,24 +58,30 @@ class PanelClient(BleakClient):
             await self.disconnect()
         return self
 
-    async def draw_to_panel(self, pixel_grid: PixelGrid):
+    async def draw_to_panel(self, pixel_grid: PixelGrid | list[PixelGrid]):
         if not self.device:
             await self.__connect_for_them()
         await self.write_gatt_char(self.CHARACTERISTIC_UUID, bytes.fromhex("bc0ff1080855"))
                                                                             # ^ picture mode is basically all we need
-        batched_data = pixel_grid.render()
-        for data in batched_data:
-            await self.write_gatt_char(self.CHARACTERISTIC_UUID, data)
-            await sleep(0.1)
-            data = 0
+        _list = pixel_grid
+        if isinstance(_list, list) is False:
+            _list = [pixel_grid]
+        assert isinstance(_list, list)
+        # doing a while loop here is a very bad, no good, terrible idea, and will block everything else
+        # if this is being called, and not by show_image, then hopefully, the developer using this knows what they're doing
 
-    def show_image(self, pixel_grid: PixelGrid | list[PixelGrid]):
+        # for joe schmoe drooling building a Discord bot, show_image should be plenty
+        # anyone else with enough brain cells should loop this function, not have this function loop itself
+        for pg in _list:
+            batched_data = pg.render()
+            for data in batched_data:
+                await self.write_gatt_char(self.CHARACTERISTIC_UUID, data)
+                await sleep(0.1)
+                data = 0
+
+    def show_image(self, pixel_grid: PixelGrid | list[PixelGrid], loop: bool = False):
         if not self.device:
             run(self.__connect_for_them())
-        if isinstance(pixel_grid, PixelGrid):
-            while True:
-                run(self.draw_to_panel(pixel_grid))
-        else:
-            while True:
-                for frame in pixel_grid:
-                    run(self.draw_to_panel(frame))
+        if isinstance(pixel_grid, list) is False: loop = False
+        while loop:
+            run(self.draw_to_panel(pixel_grid))
